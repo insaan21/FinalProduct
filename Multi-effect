@@ -1,0 +1,57 @@
+<CsoundSynthesizer>
+<CsInstruments>
+sr = 44100
+ksmps = 32 ;number of samples per control cycle
+nchnls = 2 
+0dbfs = 1
+
+
+;compressor
+f6 13 1025 7 1 256 1 512 .01 129 .01
+
+instr 1
+	asig   zar      iinch                  ;Read input         
+	kamp   rms      asig, ifqc             ;Find rms level     
+	kampn  =        kamp/30000             ;Normalize rms      
+	kcomp  tablei   kampn,itab,1,0         ;Look up compress.  
+	adel1  delayr   ideltm                 ;Delay for ideltm   
+       	   delayw   asig                   ;Write to delay     
+	acomp  =        kcomp*adel1*ipostgain  ;Apply compression  
+           zaw      acomp*kenv, ioutch     ; write out
+endin
+
+;noise gate
+
+f6 13 1025 7 0 64 0 0 1 448 1 513 1
+
+instr 2
+	asig   zar      iinch                  ;Read from input       
+	adel1  delayr   ideltm                 ;Delay the signal      
+	       delayw   asig                                          
+	kamp   rms      adel1, ifqc            ;Calculate RMS         
+	kampn  =        kamp/30000             ;Normalize to 0-1      
+	kcomp  tablei   kampn,itab,1,0         ;Reference the table   
+	acomp  =        kcomp*asig*ipostgain   ; Apply noise gate     
+	       zaw      acomp*kenv, ioutch     ;Declick and write  
+endin
+
+;de-esser
+instr 3
+	asig   zar        iinch                  ;Read input         
+	afilt  butterhp   asig, ifco             ;High pass filter   
+	kamp   rms        afilt, ifqc            ;Calculate rms      
+	kampn  =          kamp/30000             ;Normalize rms 0-1  
+	kcomp  tablei     kampn,itab,1,0         ;Look up in table   
+	adel1  delayr     ideltm                 ;Delay signal       
+	       delayw     asig                                       
+	acomp  =          kcomp*adel1*ipostgain  ;Apply de-ess       
+	       zaw        acomp*kenv, ioutch     ;Declick & output   
+endin
+
+</CsInstruments>
+<CsScore>
+i1 0 30
+i2 0 30
+i3 0 30
+</CsScore>
+</CsoundSynthesizer>
