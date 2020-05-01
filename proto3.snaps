@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CABBAGE_PRESETS>
+  <PRESET0 PresetName="Untitled 0" size="0.1000000014901161" reverbFreq="2000.0"
+           lDelay="0.05000000074505806" rDelay="0.1000000014901161" tSpeed="0.5"
+           tDepth="80.0" dFeedback="-12.0" combobox="1.0"/>
+  <PRESET1 PresetName="Guitar_Pedal 1" size="0.1000000014901161" reverbFreq="2000.0"
+           lDelay="0.05000000074505806" rDelay="0.1000000014901161" tSpeed="0.5"
+           tDepth="80.0" dFeedback="-12.0" combobox="1.0"/>
+</CABBAGE_PRESETS>

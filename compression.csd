@@ -38,7 +38,14 @@ instr 3
 	out ain, ain
 endin
 
-instr 4 
+;distortion
+instr 4
+	ain inch 1
+	ain *= ampdbfs(12)
+	ain = (ain *512) + 512
+	ain table ain, giwav 
+	ain *= ampdbfs(-6)
+	out ain, ain
 endin
 
 </CsInstruments>

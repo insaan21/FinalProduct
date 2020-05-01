@@ -5,63 +5,84 @@ ksmps = 32 ;number of samples per control cycle
 nchnls = 2 
 0dbfs = 1
 
-gacmb      init    0
-garvb      init    0
+gitri ftgen 111,0,1024,7,-1, 512, 1, 512, -1 ;triangle
+giwav ftgen 0,0, 1024, 7, -1, 128, -0.9, 128, -0.5, 512, 0.5, 128, 1, 128, 0.8 ;almost tanh
 
-instr 1         
-	idur       =         p3
-	iamp       =         ampdb(p4)
-	ifrq       =         cpspch(p5)
-	ifc        =         p6
-	ifm        =         p7
-	iatk       =         p8
-	irel       =         p9
-	indx1      =         p10
-	indx2      =         p11
-	indxtim    =         p12
-	ilfodep    =         p13
-	ilfofrq    =         p14
-	ipan       =         p15
-	irvbsnd    =         p16
-	kampenv    expseg    .01, iatk, iamp, idur/9, iamp*.6, idur/(iatk+irel+idur/9),
-	                     iamp*.7, irel, .01
-	klfo       oscil     ilfodep, ilfofrq, 1
-	kindex     expon     indx1, indxtim, indx2
-	asig       foscil    kampenv, ifrq+klfo, ifc, ifm, kindex, 1
-	           outs      asig*ipan, asig*(1-ipan)
-	garvb      =         garvb+(asig*irvbsnd)
+giwav2 ftgen 1, 0, 16384, 10, 1       ;sine wave
+
+;lopass filter
+instr 1
+	ain inch 1
+
+
+	ilfospeed = 20000
+	ilfodepth = 500
+
+	kvib vibr ilfodepth, ilfospeed, 111
+
+	/*adelayoscil oscil 1, ilfospeed, gitri
+	aunused delayr 0.1
+	adelayed deltapi (ilfodepth * adelayoscil + ilfodepth + ksmps + 1) / sr
+	delayw ain
+	atremoloed = adelayed 
+	*/
+	
+
+	acompressed compress2 ain, ain, -90, -52, -30, 3, 0.01 , 0.1 , 0.05
+	
+	adistorted = acompressed * ampdbfs(6)
+	adistorted = (adistorted *512) + 512
+	adistorted table adistorted, giwav 
+	adistorted *= ampdbfs(-3)
+
+	adelayR init 0
+
+	adelayL delayr 0.05
+	awriteInputL butterlp adistorted + (adelayL * ampdbfs(-12)) + (adelayR * ampdbfs(-12)), 4000 + kvib
+	delayw awriteInputL
+	aoutL = adistorted + (adelayL * ampdbfs(-6))
+
+	adelayR delayr 0.051
+	awriteInputR butterlp adistorted + (adelayR * ampdbfs(-12)) + (adelayL * ampdbfs(-12)), 4000 + kvib
+	delayw awriteInputR
+	aoutR = adistorted + (adelayR * ampdbfs(-6)) 
+
+	outch 1, aoutL, 2, aoutR 
 endin
+
+; tremolo
+instr 2
+	ilfospeed = 7
+	ilfodepth = 100
+	ain inch 1
+	adelayoscil oscil 1, ilfospeed, gitri
+	aunused delayr 0.1
+	adelayed deltapi (ilfodepth * adelayoscil + ilfodepth + ksmps + 1) / sr
+	delayw ain
+	aout = adelayed
+	out aout, aout
+endin
+
+instr 3
+	ain inch 1
+	acompressed compress2 ain, ain, 0, 20, 20, 4, 0.1 , 0.5 , 0.02
+	out acompressed, acompressed
+endin
+
+
+instr 4
+	ain inch 1
+	ain *= ampdbfs(12)
+	ain = (ain *512) + 512
+	ain table ain, giwav 
+	ain *= ampdbfs(-6)
+	out ain, ain
+endin
+
 
 </CsInstruments>
 <CsScore>
-f1  0 4096 10   1    
+i1 0 30
 
-
-;		st	dr 	amp	frq		fc	fm	atk	rel	ndx1	ndx2	ndxtim  lfodep	lfofrq	pan	rvbsnd
-;=================================================================================
-i 1 	0	2	80	8.09	1	2	.01	.2	20		4		.5		7		5		1	.1  
-i 1 	2	2	80	.		2	1	. 	. 	10		1		.8		.		6		0	.2  
-i 1 	5	.2	80	.		1	2	. 	.1	30		.		.01		9		4		1	.1  
-i 1 	+	.	79	.		2	1	.	.	<		<		<		<		<		<	< 
-i 1 	+	.	78	.		1	3	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	77	.		3	1	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	76	.		1	4	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	75	.		4	1	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	74	.		1	5	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	73	.		5	1	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	72	.		1	6	.	.	.		.		.		.		.		.	.  
-i 1 	+	1	71	.		6	1	.	.	10		3		.2		4		10		0	.04  
-i 1 	+	.2	71	.		6	1	.	.	<		<		<		<		<		<	< 
-i 1 	+	.	72	.		1	6	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	73	.		5	1	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	74	.		1	5	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	75	.		4	1	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	76	.		1	4	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	77	.		3	1	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	78	.		1	3	.	.	.		.		.		.		.		.	.  
-i 1 	+	.	79	.		2	1	.	.	.		.		.		.		.		.	. 
-i 1 	+	.2	80	.		1	2	. 	.1	30		1		.01		9		4		1	.1  
-i 1 	+	2	80	.		2	1	.  	.2	10		4		.8		7		6		1	.2  
-i 1 	2.5	4	80	.		1	2	. 	. 	20		4		.5		.		5		0	.1  
 </CsScore>
 </CsoundSynthesizer>
