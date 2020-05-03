@@ -7,4 +7,14 @@
   <PRESET1 PresetName="Guitar_Pedal 1" size="0.1000000014901161" reverbFreq="2000.0"
            lDelay="0.05000000074505806" rDelay="0.1000000014901161" tSpeed="0.5"
            tDepth="80.0" dFeedback="-12.0" combobox="1.0"/>
+  <PRESET2 PresetName="Guitar_Pedal 2" size="0.1000000014901161" reverbFreq="2476.199951171875"
+           lDelay="0.05000000074505806" rDelay="0.1000000014901161" dFeedback="-4.0"
+           tSpeed="0.5" tDepth="80.0" Rate="5.594000339508057" Cof="4124.01513671875"
+           lInt="0.3330000042915344" lRes="36.05600357055664" lMix="-5.500000476837158"
+           rInt="0.5" rRes="47.05600357055664" rMix="-5.0" combobox="1.0"/>
+  <PRESET3 PresetName="Guitar_Pedal 3" size="0.300000011920929" reverbFreq="2000.0"
+           lDelay="0.05000000074505806" rDelay="0.1000000014901161" dFeedback="-12.0"
+           tSpeed="0.9000000357627869" tDepth="30.00000190734863" Rate="4.10200023651123"
+           Cof="6572.64111328125" lInt="0.2670000195503235" lRes="34.56400299072266"
+           lMix="-6.5" rInt="0.5" rRes="48.58100128173828" rMix="-6.0" combobox="1.0"/>
 </CABBAGE_PRESETS>

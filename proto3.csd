@@ -1,24 +1,44 @@
-<Cabbage> bounds(0, 0, 0, 0)
-
-form caption("Guitar Pedal") size(400, 300), colour(58, 110, 182), pluginid("def1") 
-groupbox bounds(0, 0, 182, 159) text("Reverb")  outlinecolour(130, 42, 42, 255) colour(60, 21, 21, 255)
-rslider bounds(20, 54, 60, 60) range(0, 1, 0.1, 1, 0.1) channel("size") text("Size")
-rslider bounds(106, 54, 60, 60) range(1000, 10000, 2000, 1, 0.1)  text("Frequency") channel("reverbFreq")
 
 
+\<Cabbage> bounds(0, 0, 0, 0)
 
-groupbox bounds(184, 0, 215, 161) colour(66, 123, 130, 255) text("Delay")
-rslider bounds(202, 40, 60, 60) range(0, 1, 0.05, 1, 0.1) text("Left Time")  channel("lDelay")
-rslider bounds(316, 38, 60, 60) range(0, 1, 0.1, 1, 0.1) text("Right Time") channel("rDelay")
+form caption("Guitar Pedal") size(800, 600), colour(58, 110, 182), pluginid("def1") 
+groupbox bounds(0, 0, 400, 200) text("Reverb")  outlinecolour(130, 42, 42, 255) colour(7, 0, 87, 164)
+rslider bounds(50, 60, 100, 100) range(0, 1, 0.1, 1, 0.1) channel("size") trackercolour(255, 255, 255, 255) text("Size") outlinecolour(0, 0, 0, 255) fontcolour(130, 87, 87, 255) textboxoutlinecolour(255, 255, 255, 178) 
+rslider bounds(250, 60, 100, 100) range(1000, 10000, 2000, 1, 0.1)  trackercolour(255, 255, 255, 255) text("Frequency") channel("reverbFreq") outlinecolour(0, 0, 0, 255)
 
 
-groupbox bounds(18, 162, 373, 98) colour(55, 47, 82, 255) text("Tremolo") outlinecolour(183, 82, 82, 255)
-hslider bounds(34, 198, 119, 48) range(0, 1, 0.5, 1, 0.1) velocity(0.19) text("Speed") channel("tSpeed")
-hslider bounds(218, 198, 130, 43) range(0, 100, 80, 1, 10) text("Depth") channel("tDepth")
-hslider bounds(220, 100, 150, 60) range(-12, -1, -12, 1, 0.5) text("Feedback") channel("dFeedback") velocity(0.41)
 
-combobox bounds(192, 266, 107, 32), channel("combobox"), populate("*.snaps")
-filebutton bounds(116, 264, 60, 36), channel("but1"), text("Save", "Save"), mode("snapshot")
+groupbox bounds(400, 0, 400, 200) colour(52, 78, 207, 198) text("Delay")
+rslider bounds(450, 65, 80, 80) range(0, 1, 0.05, 1, 0.1) trackercolour(255, 255, 255, 255) text("Left Time")  channel("lDelay")
+rslider bounds(680, 65, 80, 80) range(0, 1, 0.1, 1, 0.1) trackercolour(255, 255, 255, 255) text("Right Time") channel("rDelay")
+vslider bounds(575, 25, 50, 175) range(-12, -1, -12, 1, 0.5) trackercolour(255, 255, 255, 255) text("Feedback") channel("dFeedback") velocity(0.41)
+
+groupbox bounds(0, 200, 800, 150) colour(164, 157, 157, 195) text("Tremolo") outlinecolour(183, 82, 82, 255) fontcolour(0, 0, 0, 255)
+hslider bounds(50, 250, 250, 50) range(0, 1, 0.5, 1, 0.1) velocity(0.19) trackercolour(250, 250, 250, 255) text("Speed") channel("tSpeed") fontcolour(221, 17, 17, 255) textcolour(0, 0, 0, 255) 
+hslider bounds(420, 252, 250, 50) range(0, 100, 80, 1, 10) trackercolour(255, 255, 255, 255) text("Depth") channel("tDepth") fontcolour(94, 46, 46, 255) textcolour(0, 0, 0, 255) textboxcolour(0, 0, 0, 0) textboxoutlinecolour(0, 0, 0, 0)
+
+
+
+
+groupbox bounds(0, 350, 800, 250) text("Filter") colour(255, 255, 255, 255) fontcolour(130, 125, 125, 255)
+rslider bounds(112, 374, 150, 80) range(1, 10, 0, 1, 0.001) trackercolour(255, 255, 255, 255) text("Rate") outlinecolour(253, 113, 113, 255) colour(241, 241, 241, 255) markercolour(255, 0, 0, 255) channel("Rate")
+rslider bounds(512, 374, 150, 80) range(500, 10000, 1000, 1, 0.001) outlinecolour(255, 89, 89, 255) colour(255, 255, 255, 255) markercolour(255, 0, 0, 255) trackercolour(255, 255, 255, 255) text("Cutoff") channel("Cof")
+
+groupbox bounds(0, 450, 400, 150) colour(255, 255, 255, 255) text("Left")
+rslider bounds(25, 500, 75, 70) range(0, 1, 0, 1, 0.001) outlinecolour(255, 79, 79, 255) markercolour(255, 0, 0, 255) trackercolour(255, 255, 255, 255) text("Intensity") channel("lInt")
+rslider bounds(275, 500, 75, 70) range(0, 100, 1, 1, 0.001) markercolour(255, 0, 0, 255) outlinecolour(255, 119, 119, 255) trackercolour(255, 255, 255, 255) text("Resonance") channel("lRes")
+rslider bounds(130, 490, 124, 98) range(-12, -1, -12, 1, 0.5) outlinecolour(253, 114, 114, 255) markercolour(255, 0, 0, 255) trackercolour(255, 255, 255, 255) text("Mix") channel("lMix")
+
+groupbox bounds(400, 450, 400, 150) colour(255, 255, 255, 255) text("Right")
+rslider bounds(425, 500, 75, 70) range(0, 1, 0.5, 1, 0.001) outlinecolour(255, 79, 79, 255) markercolour(255, 0, 0, 255) trackercolour(255, 255, 255, 255) text("Intensity") channel("rInt") colour(255, 251, 251, 255)
+rslider bounds(675, 500, 75, 70) range(0, 100, 10, 1, 0.001) markercolour(255, 0, 0, 255) outlinecolour(255, 119, 119, 255) trackercolour(255, 255, 255, 255) text("Resonance") channel("rRes")
+rslider bounds(530, 490, 124, 98) range(-12, -1, -12, 1, 0.5) outlinecolour(253, 114, 114, 255) markercolour(255, 0, 0, 255) trackercolour(255, 255, 255, 255) text("Mix") channel("rMix")
+
+combobox bounds(400, 580, 100, 20), channel("combobox"), populate("*.snaps")
+filebutton bounds(340, 580, 60, 20), channel("but1"), text("Save", "Save"), mode("snapshot")
+
+
 </Cabbage>
 
 
@@ -43,16 +63,16 @@ gklDelayTime init 0.2
 instr 1
 
     ;changing values for dual res filter
-	ilforate = 1
-	icof = 1000
+	klforate chnget "Rate"
+	kcof chnget "Cof"
 
-	iAint = 1.0
-	iAres = 10
-	iAMix = ampdbfs(-12)
+	kAint chnget "lInt"
+	kAres chnget "lRes"
+	kAmix chnget "lMix"
 
-	iBint = 0.3
-	iBres = 40
-	iBMix = ampdbfs(-11)
+	kBint chnget "rInt"
+	kBres chnget "rRes"
+	kBmix chnget "rMix"
 
 	iDry = ampdbfs(-12)
 
@@ -76,21 +96,21 @@ instr 1
     kcofFreq chnget "reverbFreq"
 	ipitchm = 1
 
-	ain inch 2
+	ain inch 2 
 
-	alfo oscil 1, ilforate, gisquare ; -1 to 1
+	alfo oscil 1, klforate, gisquare ; -1 to 1
 	alfo = alfo * 0.5 + 0.5 ; 0 to 1
 
 
 	;cof in hz -> double normal cof
-	aAlfo = (alfo*iAint)*icof*3 + icof 
-	aBlfo = (alfo*iBint)*icof*3 + icof
+	aAlfo = (alfo*kAint)*kcof*3 + kcof 
+	aBlfo = (alfo*kBint)*kcof*3 + kcof
 
-	aAsnd rezzy ain, aAlfo, iAres
-	aBsnd rezzy ain, aBlfo, iBres
+	aAsnd rezzy ain, aAlfo, kAres
+	aBsnd rezzy ain, aBlfo, kBres
 
  
-    amix = (aAsnd * iAMix) + (aBsnd * iBMix) + (ain * iDry)  ;+ (aoctave * ampdbfs(-12))
+    amix = (aAsnd * ampdbfs(kAmix)) + (aBsnd * ampdbfs(kBmix)) + (ain * iDry)  ;+ (aoctave * ampdbfs(-12))
 
 	
 	adelayoscil oscil 1, klfospeed, gitri
